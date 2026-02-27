@@ -2,92 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🚨 CRITICAL SYSTEM FAILURE 🚨</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ugh, Another Birthday?</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; overflow: hidden; margin: 0; touch-action: none; }
-        
-        /* The Fake Crack Effect */
-        #crack {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://i.imgur.com/vHSp6vX.png'); /* Transparent crack image */
-            background-size: cover; pointer-events: none; display: none; z-index: 9999;
-        }
-
-        .scanner {
-            width: 100%; height: 5px; background: #0f0; position: absolute;
-            top: 0; box-shadow: 0 0 15px #0f0; animation: scan 2s infinite;
-        }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100vh; } }
-
-        .glitch-btn {
-            background: red; color: white; border: none; padding: 20px;
-            font-weight: bold; font-size: 1.2rem; margin-top: 50vh; width: 80%;
-            box-shadow: 5px 5px 0 blue;
-        }
-
-        #error-log { font-family: monospace; font-size: 10px; padding: 10px; color: #0f0; }
+        body { background: #fdf6e3; font-family: 'Courier New', Courier, monospace; color: #657b83; text-align: center; padding: 30px; }
+        .chat-box { background: #eee8d5; padding: 20px; border-radius: 20px; border: 2px solid #93a1a1; margin: 20px auto; max-width: 400px; }
+        .btn { background: #d33682; color: white; border: none; padding: 15px 25px; border-radius: 50px; font-weight: bold; margin: 10px; cursor: pointer; }
+        #reaction-img { width: 100%; border-radius: 10px; display: none; margin-top: 15px; }
+        .shake { animation: shake 0.2s; }
+        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(5px); } 50% { transform: translateX(-5px); } 100% { transform: translateX(0); } }
     </style>
 </head>
 <body>
 
-    <div id="crack"></div>
-    <div id="scanner-line" class="scanner"></div>
+    <h2>Amama's Birthday Portal</h2>
+    <p><i>(Hosted by a very tired server)</i></p>
 
-    <div id="main-content" style="text-align: center;">
-        <div id="error-log">
-            > Initializing Moiz_Bday_Prank.js...<br>
-            > Accessing Front Camera... [OK]<br>
-            > Scanning for Amama's Face... [NOT FOUND: TOO OLD]<br>
-            > Attempting Force Update...
-        </div>
-
-        <h2 style="color: yellow; margin-top: 50px;">BIO-HAZARD DETECTED</h2>
-        <p>This phone belongs to an <b>Ancient Individual</b>.</p>
-        
-        <button class="glitch-btn" onclick="triggerMeltdown()">REPAIR PHONE</button>
+    <div class="chat-box" id="main-box">
+        <p id="msg">Oh, it's you. Amama, right? Moiz told me I had to do something special for you.</p>
+        <button class="btn" onclick="nextStep(1)">Is there a gift?</button>
     </div>
 
     <script>
-        let clicks = 0;
+        let step = 0;
+        const msg = document.getElementById('msg');
+        const box = document.getElementById('main-box');
 
-        function triggerMeltdown() {
-            clicks++;
-            
-            // 1. Violent Vibration
-            if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 500]);
+        function nextStep(s) {
+            if (navigator.vibrate) navigator.vibrate(50);
+            box.classList.add('shake');
+            setTimeout(() => box.classList.remove('shake'), 200);
 
-            // 2. The Pranks
-            if (clicks === 1) {
-                alert("⚠️ WARNING: Repair failed. Battery acid leaking into 'Birthday.exe'");
-            }
-
-            if (clicks === 2) {
-                // Show fake crack
-                document.getElementById('crack').style.display = 'block';
-                document.body.style.background = "white";
-                setTimeout(() => { document.body.style.background = "black"; }, 100);
-                alert("🚨 CRACK DETECTED: Amama pressed the screen too hard with her old fingers.");
-            }
-
-            if (clicks === 3) {
-                // Final Reveal
-                startFinalPhase();
+            if (s === 1) {
+                msg.innerHTML = "A gift? In this economy? Moiz sent me a budget of $0.00. I can offer you this 'Happy Birthday' text in 12pt font. Take it or leave it.";
+                box.innerHTML = msg.outerHTML + `
+                    <button class="btn" onclick="nextStep(2)">Leave it</button>
+                    <button class="btn" onclick="nextStep(3)">I want more</button>
+                `;
+            } else if (s === 2) {
+                msg.innerHTML = "Fine. Go be old somewhere else. (Just kidding, Moiz would fire me. Click 'I want more'.)";
+                box.innerHTML = msg.outerHTML + `<button class="btn" onclick="nextStep(3)">I want more</button>`;
+            } else if (s === 3) {
+                msg.innerHTML = "Ugh, fine. You're so demanding. Let me check the database... Scanning... Wow, you're actually turning [ERROR: AGE_TOO_HIGH].";
+                box.innerHTML = msg.outerHTML + `<button class="btn" onclick="nextStep(4)">Excuse me?</button>`;
+            } else if (s === 4) {
+                msg.innerHTML = "Don't get mad at me, I'm just the code! Moiz is the one who told me you're basically a dinosaur now. 🦖";
+                box.innerHTML = msg.outerHTML + `<button class="btn" onclick="final()">See Real Message</button>`;
             }
         }
 
-        function startFinalPhase() {
-            document.getElementById('scanner-line').style.display = 'none';
+        function final() {
             document.body.innerHTML = `
-                <div style="background: linear-gradient(45deg, #ff00ff, #00ffff); height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;">
-                    <h1 style="font-size: 4rem; text-shadow: 3px 3px 0 #000;">GOTCHA!</h1>
-                    <h2 style="background: black; color: yellow; padding: 10px;">HAPPY BIRTHDAY AMAMA!</h2>
-                    <p style="color: black; font-weight: bold; font-size: 1.2rem;">
-                        Your phone isn't broken, you're just easy to prank. <br><br>
-                        Moiz wanted to make sure your heart rate was high enough for all the cake you're about to eat!
-                    </p>
-                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHI3Z2Z3Ynd3Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/26fpCcXfPtkv9kO7m/giphy.gif" width="90%" style="border: 5px solid black; border-radius: 20px;">
-                    <p style="color: black; margin-top: 20px;">Now go have a legendary day! 🎂🔥</p>
+                <div style="padding: 20px;">
+                    <h1 style="color: #d33682;">HAPPY BIRTHDAY AMAMA! 🎂</h1>
+                    <p><b>From Moiz:</b></p>
+                    <p>I told the website to be mean to you so you'd appreciate me more. Did it work?</p>
+                    <p>Have a day as amazing, chaotic, and wonderful as you are! You're the best friend a person could ask for (even if you are ancient).</p>
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y4Ym5jNHR6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKu6WJxtZvbqKv6/giphy.gif" width="100%">
                 </div>
             `;
         }
