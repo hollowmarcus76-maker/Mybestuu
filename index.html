@@ -2,84 +2,105 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AMAMA'S CHAOTIC DAY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⚠️ SYSTEM CRITICAL: AMAMA ⚠️</title>
     <style>
         body {
-            background-color: #ff00ff;
-            color: white;
+            background-color: #ff0000;
             font-family: 'Comic Sans MS', cursive;
             text-align: center;
-            overflow-x: hidden;
-            transition: background 0.2s;
+            color: white;
+            transition: 0.1s;
+            overflow: hidden;
+            touch-action: none; /* Prevents scrolling while she's chasing the button */
         }
-        .container { padding: 20px; }
-        h1 { font-size: 3rem; text-shadow: 4px 4px #000; animation: wobble 0.5s infinite; }
+        .header-box { background: yellow; color: black; padding: 10px; font-weight: bold; border-bottom: 5px solid black; }
         
-        @keyframes wobble {
-            0% { transform: rotate(3deg); }
-            50% { transform: rotate(-3deg); }
-            100% { transform: rotate(3deg); }
-        }
-
-        .confetti { font-size: 50px; }
-
-        #run-button {
+        #gift-btn {
             position: absolute;
-            padding: 15px 30px;
-            font-size: 20px;
-            background: yellow;
+            padding: 25px;
+            font-size: 30px;
+            background: #00ff00;
             color: black;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            z-index: 100;
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 10px 0 #008800;
+            z-index: 9999;
         }
 
-        .moiz-note {
-            background: rgba(0,0,0,0.7);
-            padding: 15px;
-            border-radius: 15px;
-            margin-top: 300px;
+        .stats { font-size: 1.5rem; margin-top: 20px; text-shadow: 2px 2px #000; }
+        .glitch { animation: shake 0.2s infinite; }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            50% { transform: translate(-1px, -2px) rotate(-1deg); }
+            100% { transform: translate(1px, -1px) rotate(1deg); }
         }
-
-        #secret-msg { display: none; color: lime; font-size: 1.5rem; }
     </style>
 </head>
-<body id="body">
+<body>
 
-    <div class="container">
-        <div class="confetti">🎉🍕🎈🍟</div>
-        <h1>HAPPY BIRTHDAY AMAMA!</h1>
-        <p>Moiz says you're getting old. Try to click the button below to claim your gift.</p>
-        
-        <button id="run-button" onmouseover="runAway()">CLICK FOR GIFT 🎁</button>
+    <div class="header-box">⚠️ MOIZ.EXE HAS DETECTED A BIRTHDAY ⚠️</div>
 
-        <div class="moiz-note">
-            <h3>A Message from Moiz:</h3>
-            <p>"Amama, you are the only person I know who is actually crazier than this website. May your day be filled with cake and may you finally learn how to click a moving button."</p>
-            <button onclick="reveal()">I give up, show the message</button>
-            <p id="secret-msg">Fine! You're awesome. Have the best day ever! 🎂</p>
-        </div>
+    <h1 class="glitch">HAPPY BIRTHDAY AMAMA!</h1>
+    
+    <div class="stats">
+        Frustration Level: <span id="miss-count">0</span>%
+    </div>
+
+    <button id="gift-btn" ontouchstart="dodge()">🎁</button>
+
+    <div style="margin-top: 400px; padding: 20px;">
+        <p><i>Note: The button is faster than you. Accept it.</i></p>
+        <button onclick="surrender()" style="background: black; color: white; padding: 10px;">I'm too old for this, help me Moiz</button>
     </div>
 
     <script>
-        function runAway() {
-            const btn = document.getElementById('run-button');
-            const x = Math.random() * (window.innerWidth - btn.clientWidth);
-            const y = Math.random() * (window.innerHeight - btn.clientHeight);
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+        let count = 0;
+
+        function dodge() {
+            const btn = document.getElementById('gift-btn');
+            count++;
+            document.getElementById('miss-count').innerText = count;
+
+            // 📳 THE VIBRATE FEATURE
+            // Vibrates for 100ms every time she touches the button
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]); 
+            }
+
+            // Change background to a random annoying color
+            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#00ff00', '#ff4500'];
+            document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+            // Move the button
+            const maxX = window.innerWidth - btn.clientWidth;
+            const maxY = window.innerHeight - btn.clientHeight;
             
-            // Change background color randomly
-            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
-            document.getElementById('body').style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            btn.style.left = Math.random() * maxX + 'px';
+            btn.style.top = Math.random() * maxY + 'px';
+
+            if (count === 15) {
+                alert("ERROR: Amama's reflexes are 404 Not Found.");
+            }
         }
 
-        function reveal() {
-            document.getElementById('secret-msg').style.display = 'block';
-            alert("Moiz says: Stop being lazy and keep chasing the button!");
+        function surrender() {
+            // Stop vibrations and show the real message
+            if (navigator.vibrate) navigator.vibrate(0);
+            
+            document.body.innerHTML = `
+                <div style="background:white; color:black; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; padding: 20px;">
+                    <h1 style="color:blue;">HBD AMAMA! 🎉</h1>
+                    <p style="font-size: 1.2rem; line-height: 1.6;">
+                        <b>From Moiz:</b><br>
+                        I hope your phone vibrating like crazy didn't give you a heart attack! 
+                        You're an amazing friend and I hope you have the best birthday ever. 
+                        Now let's go get some food (you're paying for making me code this).
+                    </p>
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHR0dzRndm9vNmZ5bmZ5bmZ5bmZ5bmZ5bmZ5bmZ5bmZ5bmZ5bmZ5JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/kyLYXonQYYfwYDIeZl/giphy.gif" width="80%">
+                    <p style="font-size: 0.8rem; color: gray; margin-top: 20px;">P.S. You missed the button ${count} times. I have the logs. 😂</p>
+                </div>
+            `;
         }
     </script>
 </body>
