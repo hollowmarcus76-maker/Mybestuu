@@ -2,133 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🚨 CRITICAL ERROR 🚨</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Birthday Verification Portal</title>
     <style>
-        body {
-            background: #000; color: #ff0000; font-family: 'Courier New', monospace;
-            text-align: center; margin: 0; overflow: hidden; touch-action: none;
-        }
-        #stage { height: 100vh; width: 100vw; position: relative; transition: 0.1s; }
-        
-        /* Glitch Effect */
-        .glitch-text { animation: glitch 0.1s infinite; font-weight: bold; font-size: 1.2rem; }
-        @keyframes glitch {
-            0% { transform: skew(2deg); color: #ff0000; }
-            50% { transform: skew(-2deg); color: #00ff00; }
-            100% { transform: skew(0deg); color: #0000ff; }
-        }
-
-        #gift-btn {
-            position: absolute; width: 80px; height: 80px;
-            background: radial-gradient(circle, #fff, #ff0000);
-            border: none; border-radius: 50%; font-size: 40px;
-            z-index: 1000; box-shadow: 0 0 20px #ff0000;
-        }
-
-        .alert-box {
-            position: fixed; top: 30%; left: 10%; width: 80%;
-            background: white; color: black; border: 4px solid red;
-            padding: 20px; z-index: 9999; display: none; font-weight: bold;
-        }
-
-        /* Gravity Effect */
-        .fall { transition: transform 2s ease-in; transform: translateY(1000px) rotate(45deg) !important; }
+        body { background: #f0f0f0; font-family: 'Arial', sans-serif; color: #333; padding: 20px; }
+        .gov-header { border-bottom: 3px solid #0056b3; margin-bottom: 20px; padding-bottom: 10px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        label { display: block; margin: 15px 0 5px; font-weight: bold; font-size: 0.9rem; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .btn { background: #0056b3; color: white; border: none; padding: 15px; width: 100%; border-radius: 4px; margin-top: 20px; font-weight: bold; }
+        #error-msg { color: red; display: none; margin-top: 15px; font-size: 0.8rem; font-style: italic; }
+        .hidden { display: none; }
     </style>
 </head>
-<body onclick="initAudio()">
+<body>
 
-    <div id="stage">
-        <div class="glitch-text" style="margin-top: 50px;">
-            ⚠️ VIRUS: MOIZ_HACK_V3.exe ⚠️<br>
-            TARGET: AMAMA | STATUS: AGING RAPIDLY
-        </div>
-
-        <div id="cam-msg" style="color: lime; font-size: 0.8rem; margin-top: 10px;">
-            [•] REMOTE CAMERA ACCESS GRANTED... MOIZ IS WATCHING
-        </div>
-
-        <button id="gift-btn" ontouchstart="extremeChaos()">🎁</button>
-
-        <div id="storage-msg" style="margin-top: 300px; font-size: 0.7rem;">
-            SCANNING BRAIN... <br>
-            [||||||||||      ] 40% MEMORY FULL OF DUMB JOKES
-        </div>
+    <div class="gov-header">
+        <small>Official Document: 2026-BDAY-AMAMA</small>
+        <h2>National Aging Registry</h2>
     </div>
 
-    <div id="fake-alert" class="alert-box">
-        SYSTEM OVERHEATING!<br><br>
-        Amama's birthday is too "hot" for this phone to handle. Delete cake.exe?
-        <br><br>
-        <button onclick="closeAlert()">YES (DELETE)</button>
+    <div id="form-container" class="card">
+        <p>Your birthday wish is currently <b>LOCKED</b>. Please verify your identity to Moiz's satisfaction.</p>
+        
+        <label>Legal Name of Recipient</label>
+        <input type="text" placeholder="Amama (The Favorite Friend)" id="nameInput">
+
+        <label>Current Mental Age</label>
+        <select>
+            <option>5 years old</option>
+            <option>Toddler throwing a tantrum</option>
+            <option>Actually 100</option>
+            <option>Same as Moiz (The Smart One)</option>
+        </select>
+
+        <label>Reason for being so old?</label>
+        <input type="text" placeholder="Explain yourself...">
+
+        <label>Are you a robot?</label>
+        <div style="display: flex; align-items: center;">
+            <input type="checkbox" style="width: auto; margin-right: 10px;" id="robotCheck"> 
+            <span>I am 100% human and I promise to buy Moiz lunch.</span>
+        </div>
+
+        <button class="btn" onclick="submitForm()">REQUEST BIRTHDAY WISH</button>
+        <p id="error-msg"></p>
+    </div>
+
+    <div id="success-screen" class="hidden card" style="text-align: center;">
+        <h1 style="color: #0056b3;">ACCESS GRANTED</h1>
+        <hr>
+        <p style="font-size: 1.2rem;"><b>Verification Result:</b> Amama is officially 1 year closer to being a grandma.</p>
+        <p>"Happy Birthday, Amama! I was going to get you a real gift, but the paperwork for this website took up my whole budget."</p>
+        <p>- Love, Moiz</p>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGhsd2p6bnVxc3U3Ym5jNHR6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l0Iy6pCMMQh50D9Pa/giphy.gif" width="100%">
     </div>
 
     <script>
-        let taps = 0;
-        let gravityTriggered = false;
+        let attempt = 0;
+        function submitForm() {
+            const error = document.getElementById('error-msg');
+            const name = document.getElementById('nameInput').value;
+            const check = document.getElementById('robotCheck').checked;
+            attempt++;
 
-        function extremeChaos() {
-            taps++;
-            
-            // 1. Extreme Vibration (The Morse Code of Doom)
-            if (navigator.vibrate) {
-                navigator.vibrate([100, 50, 200, 50, 300]);
+            if (name.toLowerCase() !== 'amama') {
+                error.innerText = "Error: System only recognizes 'Amama'. Who even are you?";
+                error.style.display = 'block';
+            } else if (!check) {
+                error.innerText = "Error: You must promise to buy Moiz lunch to proceed.";
+                error.style.display = 'block';
+            } else if (attempt < 3) {
+                error.innerText = "Error 505: Recipient is too old. Please try clicking the button harder.";
+                error.style.display = 'block';
+                if (navigator.vibrate) navigator.vibrate(200);
+            } else {
+                document.getElementById('form-container').classList.add('hidden');
+                document.getElementById('success-screen').classList.remove('hidden');
             }
-
-            // 2. Move Button
-            const btn = document.getElementById('gift-btn');
-            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            btn.style.top = Math.random() * (window.innerHeight - 150) + 'px';
-
-            // 3. Screen Flash & Shake
-            document.body.style.background = (taps % 2 == 0) ? "#fff" : "#000";
-            document.getElementById('stage').style.transform = `translate(${Math.random()*10}px, ${Math.random()*10}px)`;
-
-            // 4. Milestone Events
-            if (taps === 7) {
-                document.getElementById('fake-alert').style.display = 'block';
-            }
-
-            if (taps === 12) {
-                document.getElementById('cam-msg').innerHTML = "🚨 CAPTURING FRUSTRATED FACE... UPLOADING TO MOIZ'S CLOUD";
-                document.getElementById('cam-msg').style.color = "red";
-            }
-
-            if (taps === 20 && !gravityTriggered) {
-                triggerGravity();
-            }
-        }
-
-        function triggerGravity() {
-            gravityTriggered = true;
-            document.querySelectorAll('div, p, h1').forEach(el => {
-                el.classList.add('fall');
-            });
-            setTimeout(finalReveal, 2000);
-        }
-
-        function closeAlert() {
-            document.getElementById('fake-alert').style.display = 'none';
-        }
-
-        function finalReveal() {
-            document.body.innerHTML = `
-                <div style="background:linear-gradient(to bottom, #1e3c72, #2a5298); height:100vh; color:white; padding:40px;">
-                    <h1 style="font-size: 3rem;">HBD AMAMA! 🎉</h1>
-                    <p style="font-size: 1.2rem;">
-                        <b>LOG ENTRY BY MOIZ:</b><br>
-                        Subject "Amama" successfully annoyed. <br><br>
-                        In all seriousness, you're a legend for putting up with my nonsense. 
-                        I hope your birthday is as unforgettable as this glitchy mess! 
-                    </p>
-                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmc0eXh3dzRndm9vNmZ5bmZ5bmZ5bmZ5bmZ5bmZ5bmZ5bmZ5bmZ5JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/m6O69t0U3i_Dq/giphy.gif" width="100%">
-                    <p style="margin-top:20px;">Now close this before your phone actually explodes. Love ya!</p>
-                </div>
-            `;
-        }
-
-        function initAudio() {
-            // Browsers need a click to play sound, we can add a beep here if you want!
         }
     </script>
 </body>
