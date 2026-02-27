@@ -2,84 +2,94 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Official Birthday Verification Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🚨 CRITICAL SYSTEM FAILURE 🚨</title>
     <style>
-        body { background: #f0f0f0; font-family: 'Arial', sans-serif; color: #333; padding: 20px; }
-        .gov-header { border-bottom: 3px solid #0056b3; margin-bottom: 20px; padding-bottom: 10px; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        label { display: block; margin: 15px 0 5px; font-weight: bold; font-size: 0.9rem; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .btn { background: #0056b3; color: white; border: none; padding: 15px; width: 100%; border-radius: 4px; margin-top: 20px; font-weight: bold; }
-        #error-msg { color: red; display: none; margin-top: 15px; font-size: 0.8rem; font-style: italic; }
-        .hidden { display: none; }
+        body { background: #000; color: #fff; font-family: sans-serif; overflow: hidden; margin: 0; touch-action: none; }
+        
+        /* The Fake Crack Effect */
+        #crack {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://i.imgur.com/vHSp6vX.png'); /* Transparent crack image */
+            background-size: cover; pointer-events: none; display: none; z-index: 9999;
+        }
+
+        .scanner {
+            width: 100%; height: 5px; background: #0f0; position: absolute;
+            top: 0; box-shadow: 0 0 15px #0f0; animation: scan 2s infinite;
+        }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100vh; } }
+
+        .glitch-btn {
+            background: red; color: white; border: none; padding: 20px;
+            font-weight: bold; font-size: 1.2rem; margin-top: 50vh; width: 80%;
+            box-shadow: 5px 5px 0 blue;
+        }
+
+        #error-log { font-family: monospace; font-size: 10px; padding: 10px; color: #0f0; }
     </style>
 </head>
 <body>
 
-    <div class="gov-header">
-        <small>Official Document: 2026-BDAY-AMAMA</small>
-        <h2>National Aging Registry</h2>
-    </div>
+    <div id="crack"></div>
+    <div id="scanner-line" class="scanner"></div>
 
-    <div id="form-container" class="card">
-        <p>Your birthday wish is currently <b>LOCKED</b>. Please verify your identity to Moiz's satisfaction.</p>
-        
-        <label>Legal Name of Recipient</label>
-        <input type="text" placeholder="Amama (The Favorite Friend)" id="nameInput">
-
-        <label>Current Mental Age</label>
-        <select>
-            <option>5 years old</option>
-            <option>Toddler throwing a tantrum</option>
-            <option>Actually 100</option>
-            <option>Same as Moiz (The Smart One)</option>
-        </select>
-
-        <label>Reason for being so old?</label>
-        <input type="text" placeholder="Explain yourself...">
-
-        <label>Are you a robot?</label>
-        <div style="display: flex; align-items: center;">
-            <input type="checkbox" style="width: auto; margin-right: 10px;" id="robotCheck"> 
-            <span>I am 100% human and I promise to buy Moiz lunch.</span>
+    <div id="main-content" style="text-align: center;">
+        <div id="error-log">
+            > Initializing Moiz_Bday_Prank.js...<br>
+            > Accessing Front Camera... [OK]<br>
+            > Scanning for Amama's Face... [NOT FOUND: TOO OLD]<br>
+            > Attempting Force Update...
         </div>
 
-        <button class="btn" onclick="submitForm()">REQUEST BIRTHDAY WISH</button>
-        <p id="error-msg"></p>
-    </div>
-
-    <div id="success-screen" class="hidden card" style="text-align: center;">
-        <h1 style="color: #0056b3;">ACCESS GRANTED</h1>
-        <hr>
-        <p style="font-size: 1.2rem;"><b>Verification Result:</b> Amama is officially 1 year closer to being a grandma.</p>
-        <p>"Happy Birthday, Amama! I was going to get you a real gift, but the paperwork for this website took up my whole budget."</p>
-        <p>- Love, Moiz</p>
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGhsd2p6bnVxc3U3Ym5jNHR6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l0Iy6pCMMQh50D9Pa/giphy.gif" width="100%">
+        <h2 style="color: yellow; margin-top: 50px;">BIO-HAZARD DETECTED</h2>
+        <p>This phone belongs to an <b>Ancient Individual</b>.</p>
+        
+        <button class="glitch-btn" onclick="triggerMeltdown()">REPAIR PHONE</button>
     </div>
 
     <script>
-        let attempt = 0;
-        function submitForm() {
-            const error = document.getElementById('error-msg');
-            const name = document.getElementById('nameInput').value;
-            const check = document.getElementById('robotCheck').checked;
-            attempt++;
+        let clicks = 0;
 
-            if (name.toLowerCase() !== 'amama') {
-                error.innerText = "Error: System only recognizes 'Amama'. Who even are you?";
-                error.style.display = 'block';
-            } else if (!check) {
-                error.innerText = "Error: You must promise to buy Moiz lunch to proceed.";
-                error.style.display = 'block';
-            } else if (attempt < 3) {
-                error.innerText = "Error 505: Recipient is too old. Please try clicking the button harder.";
-                error.style.display = 'block';
-                if (navigator.vibrate) navigator.vibrate(200);
-            } else {
-                document.getElementById('form-container').classList.add('hidden');
-                document.getElementById('success-screen').classList.remove('hidden');
+        function triggerMeltdown() {
+            clicks++;
+            
+            // 1. Violent Vibration
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 500]);
+
+            // 2. The Pranks
+            if (clicks === 1) {
+                alert("⚠️ WARNING: Repair failed. Battery acid leaking into 'Birthday.exe'");
             }
+
+            if (clicks === 2) {
+                // Show fake crack
+                document.getElementById('crack').style.display = 'block';
+                document.body.style.background = "white";
+                setTimeout(() => { document.body.style.background = "black"; }, 100);
+                alert("🚨 CRACK DETECTED: Amama pressed the screen too hard with her old fingers.");
+            }
+
+            if (clicks === 3) {
+                // Final Reveal
+                startFinalPhase();
+            }
+        }
+
+        function startFinalPhase() {
+            document.getElementById('scanner-line').style.display = 'none';
+            document.body.innerHTML = `
+                <div style="background: linear-gradient(45deg, #ff00ff, #00ffff); height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;">
+                    <h1 style="font-size: 4rem; text-shadow: 3px 3px 0 #000;">GOTCHA!</h1>
+                    <h2 style="background: black; color: yellow; padding: 10px;">HAPPY BIRTHDAY AMAMA!</h2>
+                    <p style="color: black; font-weight: bold; font-size: 1.2rem;">
+                        Your phone isn't broken, you're just easy to prank. <br><br>
+                        Moiz wanted to make sure your heart rate was high enough for all the cake you're about to eat!
+                    </p>
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHI3Z2Z3Ynd3Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/26fpCcXfPtkv9kO7m/giphy.gif" width="90%" style="border: 5px solid black; border-radius: 20px;">
+                    <p style="color: black; margin-top: 20px;">Now go have a legendary day! 🎂🔥</p>
+                </div>
+            `;
         }
     </script>
 </body>
