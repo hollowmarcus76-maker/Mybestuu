@@ -3,116 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>⚠️ VIRUS DETECTED: AMAMA-B-DAY ⚠️</title>
+    <title>🚨 CRITICAL ERROR 🚨</title>
     <style>
         body {
-            background-color: #000;
-            color: #0f0; /* Matrix Green */
-            font-family: 'Courier New', Courier, monospace;
-            text-align: center;
-            overflow: hidden;
-            touch-action: none;
-            transition: transform 0.5s;
+            background: #000; color: #ff0000; font-family: 'Courier New', monospace;
+            text-align: center; margin: 0; overflow: hidden; touch-action: none;
         }
+        #stage { height: 100vh; width: 100vw; position: relative; transition: 0.1s; }
+        
+        /* Glitch Effect */
+        .glitch-text { animation: glitch 0.1s infinite; font-weight: bold; font-size: 1.2rem; }
+        @keyframes glitch {
+            0% { transform: skew(2deg); color: #ff0000; }
+            50% { transform: skew(-2deg); color: #00ff00; }
+            100% { transform: skew(0deg); color: #0000ff; }
+        }
+
         #gift-btn {
-            position: absolute;
-            padding: 15px;
-            font-size: 40px;
-            background: red;
-            border: 5px dashed white;
-            border-radius: 10px;
-            z-index: 1000;
-            transition: 0.05s;
+            position: absolute; width: 80px; height: 80px;
+            background: radial-gradient(circle, #fff, #ff0000);
+            border: none; border-radius: 50%; font-size: 40px;
+            z-index: 1000; box-shadow: 0 0 20px #ff0000;
         }
-        .warning-text {
-            color: yellow;
-            font-weight: bold;
-            text-transform: uppercase;
-            animation: blink 0.5s infinite;
+
+        .alert-box {
+            position: fixed; top: 30%; left: 10%; width: 80%;
+            background: white; color: black; border: 4px solid red;
+            padding: 20px; z-index: 9999; display: none; font-weight: bold;
         }
-        @keyframes blink { 50% { opacity: 0; } }
-        
-        #timer-box { font-size: 2rem; color: red; background: white; display: inline-block; padding: 10px; }
-        
-        /* The "Upside Down" mode */
-        .flipped { transform: rotate(180deg); }
+
+        /* Gravity Effect */
+        .fall { transition: transform 2s ease-in; transform: translateY(1000px) rotate(45deg) !important; }
     </style>
 </head>
-<body id="main-body">
+<body onclick="initAudio()">
 
-    <div id="ui">
-        <h1 class="warning-text">⚠️ CRITICAL AGING ALERT ⚠️</h1>
-        <p>User: <b>AMAMA</b> | Threat Level: <b>OLD</b></p>
-        <div id="timer-box">00:<span id="seconds">30</span></div>
-        <p>Catch the gift or Moiz deletes your WhatsApp!</p>
-        <p>Misses: <span id="count">0</span></p>
+    <div id="stage">
+        <div class="glitch-text" style="margin-top: 50px;">
+            ⚠️ VIRUS: MOIZ_HACK_V3.exe ⚠️<br>
+            TARGET: AMAMA | STATUS: AGING RAPIDLY
+        </div>
+
+        <div id="cam-msg" style="color: lime; font-size: 0.8rem; margin-top: 10px;">
+            [•] REMOTE CAMERA ACCESS GRANTED... MOIZ IS WATCHING
+        </div>
+
+        <button id="gift-btn" ontouchstart="extremeChaos()">🎁</button>
+
+        <div id="storage-msg" style="margin-top: 300px; font-size: 0.7rem;">
+            SCANNING BRAIN... <br>
+            [||||||||||      ] 40% MEMORY FULL OF DUMB JOKES
+        </div>
     </div>
 
-    <button id="gift-btn" ontouchstart="chaosDodge()">🎁</button>
+    <div id="fake-alert" class="alert-box">
+        SYSTEM OVERHEATING!<br><br>
+        Amama's birthday is too "hot" for this phone to handle. Delete cake.exe?
+        <br><br>
+        <button onclick="closeAlert()">YES (DELETE)</button>
+    </div>
 
     <script>
-        let misses = 0;
-        let timeLeft = 30;
-        let btnScale = 1;
+        let taps = 0;
+        let gravityTriggered = false;
 
-        // The Chaos Logic
-        function chaosDodge() {
-            misses++;
-            document.getElementById('count').innerText = misses;
-
-            // 1. Vibrate like crazy
-            if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
-
-            const btn = document.getElementById('gift-btn');
+        function extremeChaos() {
+            taps++;
             
-            // 2. Make button smaller every time (Hard Mode)
-            btnScale -= 0.05;
-            if (btnScale < 0.4) btnScale = 0.4;
-            btn.style.transform = `scale(${btnScale})`;
-
-            // 3. Move it
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 100);
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
-
-            // 4. Fake Alerts at milestones
-            if (misses === 5) alert("⚠️ SYSTEM: Storage full of Amama's wrinkles. Please delete cake.");
-            if (misses === 10) {
-                alert("⚠️ MOIZ-VIRUS: Activating 'Upside Down' mode.");
-                document.getElementById('main-body').classList.add('flipped');
+            // 1. Extreme Vibration (The Morse Code of Doom)
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 200, 50, 300]);
             }
-            if (misses === 15) alert("⚠️ BATTERY LOW: 1%. Catch the button to plug in charger!");
+
+            // 2. Move Button
+            const btn = document.getElementById('gift-btn');
+            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            btn.style.top = Math.random() * (window.innerHeight - 150) + 'px';
+
+            // 3. Screen Flash & Shake
+            document.body.style.background = (taps % 2 == 0) ? "#fff" : "#000";
+            document.getElementById('stage').style.transform = `translate(${Math.random()*10}px, ${Math.random()*10}px)`;
+
+            // 4. Milestone Events
+            if (taps === 7) {
+                document.getElementById('fake-alert').style.display = 'block';
+            }
+
+            if (taps === 12) {
+                document.getElementById('cam-msg').innerHTML = "🚨 CAPTURING FRUSTRATED FACE... UPLOADING TO MOIZ'S CLOUD";
+                document.getElementById('cam-msg').style.color = "red";
+            }
+
+            if (taps === 20 && !gravityTriggered) {
+                triggerGravity();
+            }
         }
 
-        // The Fake Countdown
-        const timer = setInterval(() => {
-            timeLeft--;
-            document.getElementById('seconds').innerText = timeLeft < 10 ? "0" + timeLeft : timeLeft;
-            
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                finalPrank();
-            }
-        }, 1000);
+        function triggerGravity() {
+            gravityTriggered = true;
+            document.querySelectorAll('div, p, h1').forEach(el => {
+                el.classList.add('fall');
+            });
+            setTimeout(finalReveal, 2000);
+        }
 
-        function finalPrank() {
-            if (navigator.vibrate) navigator.vibrate([500, 500, 500, 500]);
-            
+        function closeAlert() {
+            document.getElementById('fake-alert').style.display = 'none';
+        }
+
+        function finalReveal() {
             document.body.innerHTML = `
-                <div style="background:red; color:white; height:100vh; padding-top:100px; transform: rotate(0deg) !important;">
-                    <h1 style="font-size: 5rem;">BOOM! 💥</h1>
-                    <p style="font-size: 1.5rem;">Time's up! Moiz has officially hacked your birthday.</p>
-                    <hr>
-                    <div style="background:white; color:black; margin: 20px; padding: 20px; border-radius: 20px;">
-                        <h2>Okay, okay... Happy Birthday Amama! 😂</h2>
-                        <p>You survived the button, the vibrations, and the fake virus. 
-                        You're officially the best (and most patient) friend.</p>
-                        <p><b>Your real gift:</b> Ask Moiz for a treat right now!</p>
-                        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y4Ym5jNHR6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6bmZ6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKSjPqcKGRZaO3u/giphy.gif" width="100%">
-                    </div>
+                <div style="background:linear-gradient(to bottom, #1e3c72, #2a5298); height:100vh; color:white; padding:40px;">
+                    <h1 style="font-size: 3rem;">HBD AMAMA! 🎉</h1>
+                    <p style="font-size: 1.2rem;">
+                        <b>LOG ENTRY BY MOIZ:</b><br>
+                        Subject "Amama" successfully annoyed. <br><br>
+                        In all seriousness, you're a legend for putting up with my nonsense. 
+                        I hope your birthday is as unforgettable as this glitchy mess! 
+                    </p>
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmc0eXh3dzRndm9vNmZ5bmZ5bmZ5bmZ5bmZ5bmZ5bmZ5bmZ5bmZ5JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/m6O69t0U3i_Dq/giphy.gif" width="100%">
+                    <p style="margin-top:20px;">Now close this before your phone actually explodes. Love ya!</p>
                 </div>
             `;
+        }
+
+        function initAudio() {
+            // Browsers need a click to play sound, we can add a beep here if you want!
         }
     </script>
 </body>
