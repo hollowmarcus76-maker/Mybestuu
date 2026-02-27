@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMAMA'S CHAOTIC DAY</title>
+    <style>
+        body {
+            background-color: #ff00ff;
+            color: white;
+            font-family: 'Comic Sans MS', cursive;
+            text-align: center;
+            overflow-x: hidden;
+            transition: background 0.2s;
+        }
+        .container { padding: 20px; }
+        h1 { font-size: 3rem; text-shadow: 4px 4px #000; animation: wobble 0.5s infinite; }
+        
+        @keyframes wobble {
+            0% { transform: rotate(3deg); }
+            50% { transform: rotate(-3deg); }
+            100% { transform: rotate(3deg); }
+        }
+
+        .confetti { font-size: 50px; }
+
+        #run-button {
+            position: absolute;
+            padding: 15px 30px;
+            font-size: 20px;
+            background: yellow;
+            color: black;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 100;
+        }
+
+        .moiz-note {
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 300px;
+        }
+
+        #secret-msg { display: none; color: lime; font-size: 1.5rem; }
+    </style>
+</head>
+<body id="body">
+
+    <div class="container">
+        <div class="confetti">🎉🍕🎈🍟</div>
+        <h1>HAPPY BIRTHDAY AMAMA!</h1>
+        <p>Moiz says you're getting old. Try to click the button below to claim your gift.</p>
+        
+        <button id="run-button" onmouseover="runAway()">CLICK FOR GIFT 🎁</button>
+
+        <div class="moiz-note">
+            <h3>A Message from Moiz:</h3>
+            <p>"Amama, you are the only person I know who is actually crazier than this website. May your day be filled with cake and may you finally learn how to click a moving button."</p>
+            <button onclick="reveal()">I give up, show the message</button>
+            <p id="secret-msg">Fine! You're awesome. Have the best day ever! 🎂</p>
+        </div>
+    </div>
+
+    <script>
+        function runAway() {
+            const btn = document.getElementById('run-button');
+            const x = Math.random() * (window.innerWidth - btn.clientWidth);
+            const y = Math.random() * (window.innerHeight - btn.clientHeight);
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            
+            // Change background color randomly
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+            document.getElementById('body').style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function reveal() {
+            document.getElementById('secret-msg').style.display = 'block';
+            alert("Moiz says: Stop being lazy and keep chasing the button!");
+        }
+    </script>
+</body>
+</html>
